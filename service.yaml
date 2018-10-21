@@ -1,15 +1,28 @@
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld-go
+  name: goproxy
   namespace: default
 spec:
   runLatest:
     configuration:
+      build:
+        serviceAccountName: build-bot
+        source:
+          git:
+            url: https://github.com/stevef1uk/goproxy.git
+            revision: master
+        template:
+          name: kaniko
+          arguments:
+          - name: IMAGE
+            value: docker.io/stevef1uk/goproxy:latest
       revisionTemplate:
         spec:
           container:
-            image: docker.io/stevef1uk/helloworld-go
+            image: docker.io/stevef1uk/goproxy:latest 
+            imagePullPolicy: Always
             env:
-            - name: TARGET
-              value: "Go Sample v1"
+            - name: SIMPLE_MSG
+              value: "Hello sample app!"
+

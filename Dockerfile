@@ -3,15 +3,15 @@
 FROM golang
 
 # Copy the local package files to the container's workspace.
-ADD . /go/src/github.com/knative/docs/helloworld
+ADD . /go/src/github.com/stevef1uk/helloworld-go
 
 # Build the outyet command inside the container.
 # (You may fetch or manage dependencies here,
 # either manually or with a tool like "godep".)
-RUN go install github.com/knative/docs/helloworld
+RUN go install github.com/stevef1uk/helloworld-go
 
 # Run the outyet command by default when the container starts.
-ENTRYPOINT /go/bin/helloworld
+ENTRYPOINT /go/bin/helloworld-go
 
 # Document that the service listens on port 8080.
 EXPOSE 8080
